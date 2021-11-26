@@ -1,0 +1,330 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: podtato-kubectl
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: podtato-main
+  namespace: podtato-kubectl
+data:
+  custom.css: |
+    html,
+    .container {
+    height: 100%;
+    }
+    body {
+      height: 100%;
+      background-image: url("https://www.fgtech.fr/wp-content/uploads/2020/11/qui-sommes-nous-g.png");
+    }
+    div {
+      text-align: center;
+    }
+    main{
+      text-align: center;
+    }
+
+    img {
+      width: 40%;
+      margin: auto;
+      display: block;
+      min-width:300px;
+    }
+
+    body {
+      display: -ms-flexbox;
+      display: flex;
+      color: #000;
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-main
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    matchLabels:
+      component: podtato-main
+  template:
+    metadata:
+      labels:
+        component: podtato-main
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: server
+        image: ghcr.io/podtato-head/podtato-main:v1-latest-dev
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+        env:
+        - name: PORT
+          value: "9000"
+        volumeMounts:
+          - name: custom
+            mountPath: "/static/custom.css"
+            subPath: custom.css
+            readOnly: true
+          - name: custom_image
+            mountPath: "/podtato-new.html"
+            subPath: body.svg
+            readOnly: true
+      volumes:
+        - name: custom-image
+          configMap:
+            name: podtato-body
+            items:
+            - key: "body.svg"
+              path: "body.svg"
+        - name: custom
+          configMap:
+            name: podtato-main
+            items:
+            - key: "custom.css"
+              path: "custom.css"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-main
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    component: podtato-main
+  ports:
+  - name: http
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  type: LoadBalancer
+  # change to NodePort if no LoadBalancer controller is available
+  # type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-hats
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    matchLabels:
+      component: podtato-hats
+  template:
+    metadata:
+      labels:
+        component: podtato-hats
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: server
+          image:  ghcr.io/podtato-head/podtato-hats:v1-latest-dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: PORT
+              value: "9000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-hats
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    component: podtato-hats
+  ports:
+    - name: http
+      port: 9001
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-left-leg
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    matchLabels:
+      component: podtato-left-leg
+  template:
+    metadata:
+      labels:
+        component: podtato-left-leg
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: server
+          image:  ghcr.io/podtato-head/podtato-left-leg:v1-latest-dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: PORT
+              value: "9000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-left-leg
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    component: podtato-left-leg
+  ports:
+    - name: http
+      port: 9002
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-left-arm
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    matchLabels:
+      component: podtato-left-arm
+  template:
+    metadata:
+      labels:
+        component: podtato-left-arm
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: server
+          image:  ghcr.io/podtato-head/podtato-left-arm:v1-latest-dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: PORT
+              value: "9000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-left-arm
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    component: podtato-left-arm
+  ports:
+    - name: http
+      port: 9003
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-right-leg
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    matchLabels:
+      component: podtato-right-leg
+  template:
+    metadata:
+      labels:
+        component: podtato-right-leg
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: server
+          image:  ghcr.io/podtato-head/podtato-right-leg:v1-latest-dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: PORT
+              value: "9000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-right-leg
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    component: podtato-right-leg
+  ports:
+    - name: http
+      port: 9004
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podtato-right-arm
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    matchLabels:
+      component: podtato-right-arm
+  template:
+    metadata:
+      labels:
+        component: podtato-right-arm
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: server
+          image:  ghcr.io/podtato-head/podtato-right-arm:v1-latest-dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9000
+          env:
+            - name: PORT
+              value: "9000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podtato-right-arm
+  namespace: podtato-kubectl
+  labels:
+    app: podtato-head
+spec:
+  selector:
+    component: podtato-right-arm
+  ports:
+    - name: http
+      port: 9005
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
