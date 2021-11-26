@@ -1,4 +1,4 @@
-module github.com/cncf/podtato-head/podtato-services/podtato-main
+module github.com/sphinxgaia/podtato-head/podtato-services/podtato-main
 
 go 1.16
 

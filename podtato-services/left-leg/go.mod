@@ -1,4 +1,4 @@
-module github.com/cncf/podtato-head/podtato-services/left-leg
+module github.com/sphinxgaia/podtato-head/podtato-services/left-leg
 
 go 1.16
 

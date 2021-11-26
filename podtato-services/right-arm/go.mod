@@ -1,4 +1,4 @@
-module github.com/cncf/podtato-head/podtato-services/right-arm
+module github.com/sphinxgaia/podtato-head/podtato-services/right-arm
 
 go 1.16
 

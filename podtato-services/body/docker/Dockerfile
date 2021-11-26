@@ -18,7 +18,7 @@ WORKDIR /build
 COPY . .
 
 # Build the application
-RUN go build -o podtatoserver ./server.go
+RUN go build -o podtatoserver .
 
 # Move to /dist directory as the place for resulting binary folder
 WORKDIR /dist
@@ -27,11 +27,10 @@ WORKDIR /dist
 RUN cp /build/podtatoserver .
 
 # Build a small image
-FROM alpine
+FROM scratch
 
 COPY --from=builder /dist/podtatoserver /
 COPY /static  /static
-COPY /static/podtato-new.html  /podtato-new.html
 
 ARG VERSION
 ENV VERSION=${VERSION}
