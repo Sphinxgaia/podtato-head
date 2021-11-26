@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.16-alpine AS builder
 
 # Set necessary environment variables needed for our image
 ENV GO111MODULE=on \
@@ -27,7 +27,7 @@ WORKDIR /dist
 RUN cp /build/podtatoserver .
 
 # Build a small image
-FROM alpine
+FROM gcr.io/distroless/base-debian10 
 
 COPY --from=builder /dist/podtatoserver /
 COPY /static  /static

@@ -1,10 +1,10 @@
 html,
 .container {
- height: 100%;
+height: 100%;
 }
 body {
   height: 100%;
-  background-color: #fff;
+  background-image: url("https://www.fgtech.fr/wp-content/uploads/2020/11/qui-sommes-nous-g.png");
 }
 div {
   text-align: center;

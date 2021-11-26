@@ -13,9 +13,9 @@ type versionedHandler struct {
 
 var versionBinding = map[string]string{
 	"v1": "01",
-	"v2": "02",
-	"v3": "03",
-	"v4": "03",
+	"v2": "03",
+	"captain": "02",
+	"error": "03",
 }
 
 func NewVersionedHandler(version, staticFilePath string) versionedHandler {

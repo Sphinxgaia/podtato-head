@@ -8,6 +8,7 @@ import (
 )
 
 var serviceMap = map[string]string{
+	"body":      "podtato-body:9007",
 	"hats":      "podtato-hats:9001",
 	"left-leg":  "podtato-left-leg:9002",
 	"left-arm":  "podtato-left-arm:9003",

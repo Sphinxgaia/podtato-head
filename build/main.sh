@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-declare -a TAGS=("v1" "v2" "v3" "v4")
+declare -a TAGS=("v1" "v2" "captain" "error")
 
 for TAG in "${TAGS[@]}"
 do
@@ -12,6 +12,12 @@ do
   echo ""
 	echo "--> podtato-head main"
   if ! docker build -f podtato-services/main/docker/Dockerfile ./podtato-services/main --build-arg VERSION="${TAG}" --tag "${REPOSITORY}"/podtato-main:"${TAG}"; then
+    echo "podtato-head main build failed with rc $?"
+    exit 1
+  fi
+
+	echo "--> podtato-head body"
+  if ! docker build -f podtato-services/body/docker/Dockerfile ./podtato-services/body --build-arg VERSION="${TAG}" --tag "${REPOSITORY}"/podtato-body:"${TAG}"; then
     echo "podtato-head main build failed with rc $?"
     exit 1
   fi

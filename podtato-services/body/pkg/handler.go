@@ -12,10 +12,10 @@ type versionedHandler struct {
 }
 
 var versionBinding = map[string]string{
-	"v1": "02",
-	"v2": "02",
-	"captain": "01",
-	"error": "04",
+	"v1": "01",
+	"captain": "02",
+	"v2": "01",
+	"error": "01",
 }
 
 func NewVersionedHandler(version, staticFilePath string) versionedHandler {
@@ -26,9 +26,9 @@ func NewVersionedHandler(version, staticFilePath string) versionedHandler {
 }
 
 func (v versionedHandler) Handler(w http.ResponseWriter, r *http.Request) {
-	img, err := ioutil.ReadFile(v.staticFilePath + "right-arm-" + versionBinding[v.version] + ".svg")
+	img, err := ioutil.ReadFile(v.staticFilePath + "body-" + versionBinding[v.version] + ".svg")
 	if err != nil {
-		log.Print("Error:", err)
+		log.Print("Error: ", err)
 		w.WriteHeader(500)
 		return
 	}

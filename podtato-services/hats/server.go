@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/cncf/podtato-head/podtato-services/hat/pkg"
+	"github.com/sphinxgaia/podtato-head/podtato-services/hat/pkg"
 	"os"
 	"strconv"
 	"time"

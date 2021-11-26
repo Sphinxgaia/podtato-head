@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/sphinxgaia/podtato-head/podtato-services/left-leg/pkg"
+	"github.com/sphinxgaia/podtato-head/podtato-services/body/pkg"
 	"os"
 	"strconv"
 	"time"
@@ -89,7 +89,7 @@ func main() {
 	versionedHandler := pkg.NewVersionedHandler(serviceVersion, staticDir)
 
 	// Serving image
-	router.Path("/images/{hat}").HandlerFunc(versionedHandler.Handler)
+	router.Path("/images/{body}").HandlerFunc(versionedHandler.Handler)
 
 	router.Path("/metrics").Handler(promhttp.Handler())
 
