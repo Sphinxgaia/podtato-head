@@ -61,6 +61,7 @@ do
     echo ""
     echo "--> pushing images for tag $TAG"
     (docker push "${REPOSITORY}"/podtato-main:"${TAG}" && \
+    docker push "${REPOSITORY}"/podtato-body:"${TAG}" && \
     docker push "${REPOSITORY}"/podtato-hats:"${TAG}" && \
     docker push "${REPOSITORY}"/podtato-left-leg:"${TAG}" && \
     docker push "${REPOSITORY}"/podtato-left-arm:"${TAG}" && \
