@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+    "io/ioutil"
 
 	"github.com/gorilla/mux"
 
@@ -80,7 +81,14 @@ func init() {
 }
 
 func main() {
-	serviceVersion := os.Getenv("VERSION")
+	var serviceVersion string
+	// expecting version as first parameter
+	fileB, errF := ioutil.ReadFile("/VERSION")
+ 	if errF != nil {
+		serviceVersion = os.Getenv("VERSION")
+ 	} else {
+		serviceVersion = string(fileB)
+	}
 
 	router := mux.NewRouter()
 	router.Use(prometheusMiddleware)

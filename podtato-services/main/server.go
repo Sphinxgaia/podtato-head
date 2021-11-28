@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+    "io/ioutil"
 
 	"github.com/gorilla/mux"
 
@@ -115,7 +116,13 @@ func init() {
 
 func main() {
 	// expecting version as first parameter
-	serviceVersion = os.Getenv("VERSION")
+	fileB, errF := ioutil.ReadFile("/VERSION")
+ 	if errF != nil {
+		serviceVersion = os.Getenv("VERSION")
+ 	} else {
+		serviceVersion = string(fileB)
+	}
+	
 
 	// create a new handler
 	handler := HTTPHandler{}
