@@ -116,7 +116,7 @@ func init() {
 
 func main() {
 	// expecting version as first parameter
-	fileB, errF := ioutil.ReadFile("/VERSION")
+	fileB, errF := ioutil.ReadFile("/secret/version")
  	if errF != nil {
 		serviceVersion = os.Getenv("VERSION")
  	} else {
